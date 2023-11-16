@@ -1,13 +1,12 @@
 #include "shell.h"
 
 /**
- * myexit - function to exit the shell
- * @info: Structure that contains potential argus. Used to maintain
+ * _myexit - function that exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
- *  Return: function that exit with a given exit status
- *         (0) if info.argv[0] != "exit"
+ *  Return: -2
  */
-int myexit(info_t *info)
+int _myexit(info_t *info)
 {
 	int exitcheck;
 
@@ -30,12 +29,12 @@ int myexit(info_t *info)
 }
 
 /**
- * mycd - function that changes current directory of the process
- * @info: Structure that contains potential args Used to maintain
+ * _mycd - function that changes the current directory of the process
+ * @info: Structure containing potential args. Used to maintain
  *          constant function prototype.
- *  Return: returns 0 every time
+ *  Return: every time 0
  */
-int mycd(info_t *info)
+int _mycd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -45,24 +44,24 @@ int mycd(info_t *info)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = get_env(info, "HOME=");
+		dir = _getenv(info, "HOME=");
 		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = get_env(info, "PWD=")) ? dir : "/");
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-		if (!get_env(info, "OLDPWD="))
+		if (!_getenv(info, "OLDPWD="))
 		{
 			_puts(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(get_env(info, "OLDPWD=")), _putchar('\n');
+		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
 		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = get_env(info, "OLDPWD=")) ? dir : "/");
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);
@@ -73,19 +72,19 @@ int mycd(info_t *info)
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", get_env(info, "PWD="));
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
 		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
 
 /**
- * myhelp - function that changes current directory of the process
- * @info: Structure that contains potential args Used to maintain
+ * _myhelp - function that changes the current directory of the process
+ * @info: Structure that contains potential args. Used to maintain
  *          constant function prototype.
- *  Return: Always 0
+ *  Return: every time 0
  */
-int myhelp(info_t *info)
+int _myhelp(info_t *info)
 {
 	char **arg_array;
 

@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /**
- * hsh - the main shell loop
- * @info: param & return info struct
+ * hsh - this function is main shell loop
+ * @info: parameter & return info struct
  * @av: args vector from main()
  *
  * Return: 0 on success, 1 on error, or error code
@@ -15,7 +15,7 @@ int hsh(info_t *info, char **av)
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
-		if (_interactive(info))
+		if (interactive(info))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
 		r = get_input(info);
@@ -26,13 +26,13 @@ int hsh(info_t *info, char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		else if (_interactive(info))
+		else if (interactive(info))
 			_putchar('\n');
 		free_info(info, 0);
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!_interactive(info) && info->status)
+	if (!interactive(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -44,7 +44,7 @@ int hsh(info_t *info, char **av)
 }
 
 /**
- * find_builtin - it finds a builtin command
+ * find_builtin - function that finds a builtin cmd
  * @info: param & return info struct
  *
  * Return: -1 if builtin not found,
@@ -56,14 +56,14 @@ int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", myexit},
-		{"env", my_env},
-		{"help", myhelp},
-		{"history", my_history},
-		{"setenv", my_setenv},
-		{"unsetenv", my_unsetenv},
-		{"cd", mycd},
-		{"alias", my_alias},
+		{"exit", _myexit},
+		{"env", _myenv},
+		{"help", _myhelp},
+		{"history", _myhistory},
+		{"setenv", _mysetenv},
+		{"unsetenv", _myunsetenv},
+		{"cd", _mycd},
+		{"alias", _myalias},
 		{NULL, NULL}
 	};
 
@@ -78,8 +78,8 @@ int find_builtin(info_t *info)
 }
 
 /**
- * find_cmd - func to find a command in PATH
- * @info: param & return info struct
+ * find_cmd - this function finds a cmd in PATH
+ * @info: parameter & return info struct
  *
  * Return: void
  */
@@ -100,7 +100,7 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = find_path(info, get_env(info, "PATH="), info->argv[0]);
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -108,7 +108,7 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if ((_interactive(info) || get_env(info, "PATH=")
+		if ((interactive(info) || _getenv(info, "PATH=")
 			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
@@ -120,8 +120,8 @@ void find_cmd(info_t *info)
 }
 
 /**
- * fork_cmd - it forks a an exec thread to run shell
- * @info: param & return info struct
+ * fork_cmd - it forks a an exec thread to run cmd
+ * @info: parameter & return info struct
  *
  * Return: void
  */

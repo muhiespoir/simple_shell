@@ -1,6 +1,7 @@
 #include "shell.h"
+
 /**
- *_eputs - it prints an input str
+ *_eputs - function that prints input str
  * @str: str to be printed
  *
  * Return: Nothing
@@ -19,7 +20,7 @@ void _eputs(char *str)
 }
 
 /**
- * _eputchar - it writes the char c to stderr
+ * _eputchar - this function writes char c to stderr
  * @c: char to print
  *
  * Return: On success 1.
@@ -39,8 +40,9 @@ int _eputchar(char c)
 		buf[i++] = c;
 	return (1);
 }
+
 /**
- * _putfd - it writes the char c to given fd
+ * _putfd - this function writes char c to given fd
  * @c: char to print
  * @fd: filedescriptor to write to
  *
@@ -63,11 +65,11 @@ int _putfd(char c, int fd)
 }
 
 /**
- * _putsfd - function that prints an input str
+ *_putsfd - function that prints an input str
  * @str: str to be printed
- * @fd: the filedescriptor to write to
+ * @fd: filedescriptor to write to
  *
- * Return: it returns number of chars put
+ * Return: number of chars put
  */
 int _putsfd(char *str, int fd)
 {

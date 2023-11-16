@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _erratoi - it converts a str to an integer
+ * _erratoi - function that converts str to an integer
  * @s: str to be converted
  * Return: 0 if no numbers in str, converted number otherwise
  *       -1 on error
@@ -29,8 +29,8 @@ int _erratoi(char *s)
 }
 
 /**
- * print_error - function that prints an error message
- * @info: param & return info struct
+ * print_error -function that prints an error message
+ * @info: parameter & return info struct
  * @estr: str that contains specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
@@ -47,9 +47,9 @@ void print_error(info_t *info, char *estr)
 }
 
 /**
- * print_d - it prints a decimal (integer) number (base 10)
- * @input: input
- * @fd: the filedescriptor to write to
+ * print_d - function to prints a decimal (integer) number (base 10)
+ * @input: the input
+ * @fd: filedescriptor to write to
  *
  * Return: number of char printed
  */
@@ -86,7 +86,7 @@ int print_d(int input, int fd)
 }
 
 /**
- * convert_number - function to convert, a clone of itoa
+ * convert_number - converter function, a clone of itoa
  * @num: number
  * @base: base
  * @flags: argument flags
@@ -122,10 +122,10 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - function that replaces first instance of '#' with '\0'
+ * remove_comments - this func replaces first instance of '#' with '\0'
  * @buf: address of the str to modify
  *
- * Return: everytime returns 0;
+ * Return: every time 0;
  */
 void remove_comments(char *buf)
 {
